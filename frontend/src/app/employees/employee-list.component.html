@@ -1,0 +1,57 @@
+<div class="page-head">
+  <div>
+    <h1>Employees</h1>
+    @if (!loading() && !error()) {
+      <p class="muted">{{ employees().length }} {{ employees().length === 1 ? 'person' : 'people' }} in the directory</p>
+    }
+  </div>
+  <a class="btn btn-primary" routerLink="/employees/new">Add employee</a>
+</div>
+
+@if (loading()) {
+  <p class="status" role="status">Loading employees…</p>
+} @else if (error()) {
+  <div class="alert" role="alert">
+    <p>{{ error() }}</p>
+    <button type="button" class="btn" (click)="load()">Try again</button>
+  </div>
+} @else if (employees().length === 0) {
+  <div class="empty">
+    <h2>No employees yet</h2>
+    <p>Add the first person to start the directory.</p>
+    <a class="btn btn-primary" routerLink="/employees/new">Add employee</a>
+  </div>
+} @else {
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Department</th>
+          <th scope="col">Job title</th>
+          <th scope="col" class="num">Salary</th>
+          <th scope="col">Hired</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (e of employees(); track e.id) {
+          <tr>
+            <td>
+              <a class="person" [routerLink]="['/employees', e.id]">
+                <span [class]="'tile ' + toneClass(e.department)" aria-hidden="true">{{ initials(e.firstName, e.lastName) }}</span>
+                <span>
+                  <span class="person-name">{{ e.firstName }} {{ e.lastName }}</span>
+                  <span class="person-email">{{ e.email }}</span>
+                </span>
+              </a>
+            </td>
+            <td>{{ e.department }}</td>
+            <td>{{ e.jobTitle }}</td>
+            <td class="num">{{ e.salary | currency: 'USD' : 'symbol' : '1.0-0' }}</td>
+            <td>{{ e.hireDate | date: 'd MMM y' }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

@@ -1,0 +1,12 @@
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" routerLink="/employees">Team directory</a>
+    <nav aria-label="Main">
+      <a routerLink="/employees" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Employees</a>
+      <a routerLink="/employees/new" routerLinkActive="active">Add employee</a>
+    </nav>
+  </div>
+</header>
+<main class="page">
+  <router-outlet />
+</main>

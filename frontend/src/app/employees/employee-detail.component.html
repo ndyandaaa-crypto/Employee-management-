@@ -1,0 +1,47 @@
+<a class="back" routerLink="/employees">Back to employees</a>
+
+@if (loading()) {
+  <p class="status" role="status">Loading profile…</p>
+} @else if (error()) {
+  <div class="alert" role="alert">
+    <p>{{ error() }}</p>
+    <a class="btn" routerLink="/employees">View all employees</a>
+  </div>
+} @else if (employee(); as e) {
+  <article class="profile">
+    <div class="profile-head">
+      <span [class]="'tile tile-lg ' + toneClass(e.department)" aria-hidden="true">{{ initials(e.firstName, e.lastName) }}</span>
+      <div>
+        <h1>{{ e.firstName }} {{ e.lastName }}</h1>
+        <p class="muted">{{ e.jobTitle }}, {{ e.department }}</p>
+      </div>
+    </div>
+
+    <dl class="facts">
+      <div>
+        <dt>Email</dt>
+        <dd><a [href]="'mailto:' + e.email">{{ e.email }}</a></dd>
+      </div>
+      <div>
+        <dt>Department</dt>
+        <dd>{{ e.department }}</dd>
+      </div>
+      <div>
+        <dt>Job title</dt>
+        <dd>{{ e.jobTitle }}</dd>
+      </div>
+      <div>
+        <dt>Salary</dt>
+        <dd>{{ e.salary | currency: 'USD' : 'symbol' : '1.2-2' }}</dd>
+      </div>
+      <div>
+        <dt>Hired on</dt>
+        <dd>{{ e.hireDate | date: 'd MMMM y' }}</dd>
+      </div>
+      <div>
+        <dt>Employee ID</dt>
+        <dd>{{ e.id }}</dd>
+      </div>
+    </dl>
+  </article>
+}
