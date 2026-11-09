@@ -2,12 +2,16 @@
 
 @if (loading()) {
   <p class="status" role="status">Loading profile…</p>
-} @else if (error()) {
+}
+
+@if (error()) {
   <div class="alert" role="alert">
     <p>{{ error() }}</p>
     <a class="btn" routerLink="/employees">View all employees</a>
   </div>
-} @else if (employee(); as e) {
+}
+
+@if (employee(); as e) {
   <article class="profile">
     <div class="profile-head">
       <span [class]="'tile tile-lg ' + toneClass(e.department)" aria-hidden="true">{{ initials(e.firstName, e.lastName) }}</span>
